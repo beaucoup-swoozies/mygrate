@@ -4,15 +4,38 @@ function compile {
 }
 
 
-function schema {
+#. Runs mygrate from local bin
+function mygrate {
     compile
-    bin/schema $@
+    bin/mygrate $@
 }
 
-
+#. Cleans generated files
 function clean {
     rm -rf lib
     rm -rf migrations/20*
+}
+
+#. Create database for postgresql.
+function postgresql_create_databases {
+    psql -d postgres -f examples/postgresql/migrations/create_databases.sql
+}
+
+
+function postgresql_test_psql {
+    postgresql_create_databases
+    compile
+    pushd examples/postgresql > /dev/null
+    ../../bin/mygrate up
+    popd > /dev/null
+}
+
+function postgresql_test_pg {
+    postgresql_create_databases
+    compile
+    pushd examples/postgresql > /dev/null
+    ../../bin/mygrate --lib pg up
+    popd > /dev/null
 }
 
 

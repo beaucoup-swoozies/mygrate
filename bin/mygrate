@@ -4,6 +4,7 @@ var prog = require("commander")
   , commands = require("../lib/commands");
 
 prog
+  .option("-l, --lib <package>", "npm database driver")
   .version("0.1.0");
 
 prog.command("init")

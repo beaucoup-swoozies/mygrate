@@ -20,7 +20,6 @@ dbInterface = ->
     Adapter = require("./"+adapter)
     break
 
-
   return {
     connectionInfo: config[adapter],
     schema: new Adapter(config[adapter])
